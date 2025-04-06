@@ -1,7 +1,6 @@
 <script>
     import { loadPyodideInstance } from "$lib/loadPyodide";
     import { onMount } from "svelte";
-    import { editor } from "monaco-editor";
 
     let errList = $state([])
     let outList = $state([])
@@ -9,6 +8,7 @@
     let pyEditor
 
     onMount(async() => {
+        const { editor, KeyCode, KeyMod } = await import('monaco-editor/esm/vs/editor/editor.main.js')
         pyodide = await loadPyodideInstance()
         pyodide.setStdout({batched: (str) => outList.push(str)})
         pyodide.setStderr({batched: (str) => outList.push(str)})
@@ -18,6 +18,7 @@
             automaticLayout: true,
             theme: "vs-dark"
         })
+        pyEditor.addCommand(KeyMod.CtrlCmd | KeyCode.Enter, exeScript)
     })
 
     async function exeScript() {
@@ -38,7 +39,7 @@
 
 <div class="editor" bind:this={editordiv}></div>
 
-<button onclick={exeScript}>Run!</button>
+<button onclick={exeScript}>Run! (ctrl + Enter)</button>
 
 <h2>アウトプット</h2>
 
