@@ -1,11 +1,11 @@
 <script>
     const pages = [
         {
-            link: "/calc_add",
+            link: "/pyodide_test/calc_add",
             text: "Pythonで足し算"
         },
         {
-            link: "/user_script_exe",
+            link: "/pyodide_test/user_script_exe",
             text: "ユーザスクリプト実行"
         }
     ]
